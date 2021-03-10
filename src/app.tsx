@@ -15,7 +15,7 @@ export const App = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [savedMessages, setSavedMessages] = useState<Message[]>([]);
 
-    const [channel, setChannel] = useState('ponce');
+    const [channel, setChannel] = useState('mikescops');
     const debouncedChannel = useDebounce(channel, 500);
 
     const handleChange = (event: React.ChangeEvent<any>) => {
@@ -42,18 +42,24 @@ export const App = () => {
         client.current.on('message', (_channel, tags, message) => {
             // const preparedMessage = `${tags['display-name']}: ${message}`;
             // console.log(preparedMessage, tags);
+            // console.log(tags);
 
-            console.log(tags);
-            setMessages((prev) => [
-                ...prev,
-                {
-                    message,
-                    author: tags['display-name'] || 'unknown',
-                    color: tags.color || '#000',
-                    emotes: tags.emotes
-                }
-            ]);
+            setMessages((prev) => {
+                return [
+                    ...(prev.length > 100 ? prev.slice(1, 101) : prev),
+                    {
+                        message,
+                        author: tags['display-name'] || 'unknown',
+                        color: tags.color || '#000',
+                        emotes: tags.emotes
+                    }
+                ];
+            });
         });
+
+        return () => {
+            client.current?.disconnect();
+        };
     }, [debouncedChannel]);
 
     useEffect(() => {
