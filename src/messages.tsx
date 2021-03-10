@@ -5,19 +5,34 @@ export const messagesRender = (message: string, emotes?: { [emoteid: string]: st
         return message;
     }
 
-    const content: JSX.Element[] = [];
+    interface ParsedEmote {
+        end: number;
+        emoteElement: JSX.Element;
+    }
+
+    const sortedEmotes = Object.entries(emotes).reduce((acc: { [position: string]: ParsedEmote }, [key, arr]) => {
+        arr.forEach((position) => {
+            const [start, end] = position.split('-');
+            const parsedEnd = parseInt(end, 10);
+            acc[start] = {
+                end: parsedEnd,
+                emoteElement: <img src={`https://static-cdn.jtvnw.net/emoticons/v1/${key}/1.0`} />
+            };
+        });
+
+        return acc;
+    }, {});
+
     let lastIndex = 0;
 
-    Object.entries(emotes).forEach(([id, positions]) => {
-        positions.forEach((position) => {
-            const [start, end] = position.split('-');
+    const content: JSX.Element[] = [];
 
-            content.push(<>{message.substring(lastIndex, parseInt(start, 10))}</>);
+    Object.entries(sortedEmotes).forEach(([start, parsedEmote]) => {
+        content.push(<>{message.substring(lastIndex, parseInt(start, 10))}</>);
 
-            content.push(<img src={`https://static-cdn.jtvnw.net/emoticons/v1/${id}/1.0`} />);
+        content.push(parsedEmote.emoteElement);
 
-            lastIndex = parseInt(end, 10) + 1;
-        });
+        lastIndex = parsedEmote.end + 1;
     });
 
     content.push(<>{message.substring(lastIndex, message.length + 1)}</>);
