@@ -46,7 +46,7 @@ export const App = () => {
 
             setMessages((prev) => {
                 return [
-                    ...(prev.length > 100 ? prev.slice(1, 101) : prev),
+                    ...(prev.length > 100 && !onDiv.current ? prev.slice(1, 101) : prev),
                     {
                         message,
                         author: tags['display-name'] || 'unknown',
