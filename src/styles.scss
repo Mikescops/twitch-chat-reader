@@ -1,0 +1,23 @@
+@import '~bootstrap/scss/bootstrap';
+
+.messages {
+    height: calc(100vh - 100px);
+    overflow: auto;
+    list-style: none;
+    padding: 0 4px;
+}
+
+.message-item {
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin: 2px 0;
+
+    &:nth-child(odd) {
+        background-color: #eee;
+    }
+
+    &:hover {
+        background-color: #ddd;
+        cursor: pointer;
+    }
+}

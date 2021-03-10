@@ -1,0 +1,100 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": ["@typescript-eslint", "react-hooks"],
+    "extends": ["plugin:react/recommended", "plugin:@typescript-eslint/recommended"],
+    "rules": {
+        "brace-style": "error",
+        "block-scoped-var": "error",
+        "camelcase": "off",
+        "comma-style": ["error", "last"],
+        "comma-dangle": "error",
+        "curly": ["error", "all"],
+        "dot-notation": "error",
+        "eqeqeq": ["error", "allow-null"],
+        "eol-last": "error",
+        "guard-for-in": "error",
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "keyword-spacing": "error",
+        "max-len": ["error", 120],
+        "new-cap": "off",
+        "no-bitwise": "error",
+        "no-caller": "error",
+        "no-cond-assign": ["error", "except-parens"],
+        "no-debugger": "error",
+        "no-empty": "error",
+        "no-eval": "error",
+        "no-extend-native": "error",
+        "no-irregular-whitespace": "error",
+        "no-iterator": "error",
+        "no-loop-func": "error",
+        "no-lonely-if": "error",
+        "no-mixed-spaces-and-tabs": "error",
+        "no-multiple-empty-lines": "error",
+        "no-multi-str": "error",
+        "no-new": "error",
+        "no-plusplus": [
+            "error",
+            {
+                "allowForLoopAfterthoughts": true
+            }
+        ],
+        "no-proto": "error",
+        "no-sequences": "error",
+        "no-undef": "off",
+        "no-unused-vars": "error",
+        "no-with": "error",
+        "no-trailing-spaces": "error",
+        "one-var": ["error", "never"],
+        "quotes": ["error", "single"],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "semi": ["error", "always"],
+        "space-in-parens": ["error", "never"],
+        "space-before-blocks": "error",
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "named": "never"
+            }
+        ],
+        "space-unary-ops": "error",
+        "spaced-comment": "error",
+        "valid-typeof": "error",
+        "wrap-iife": ["error", "inside"],
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "varsIgnorePattern": "[iI]gnored",
+                "argsIgnorePattern": "^_"
+            }
+        ],
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+                "types": {
+                    "Object": "Avoid using the `Object` type. Did you mean `object`?",
+                    "Boolean": "Avoid using the `Boolean` type. Did you mean `boolean`?",
+                    "Number": "Avoid using the `Number` type. Did you mean `number`?",
+                    "String": "Avoid using the `String` type. Did you mean `string`?",
+                    "Symbol": "Avoid using the `Symbol` type. Did you mean `symbol`?"
+                }
+            }
+        ],
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "react/prop-types": "off"
+    },
+    "settings": {
+        "react": {
+            "pragma": "React",
+            "version": "detect"
+        }
+    }
+}
