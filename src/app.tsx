@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as tmi from 'tmi.js';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import { messagesRender } from './messages';
+import { useDebounce } from './utils';
 
 interface Message {
     message: string;
@@ -11,12 +12,15 @@ interface Message {
 }
 
 export const App = () => {
-    const [messages, setMessages] = useState<Message[]>([
-        { message: 'Welcome to chat!', author: 'system', color: '#000' }
-    ]);
-    const [savedMessages, setSavedMessages] = useState<Message[]>([
-        { message: 'Welcome to saved chat!', author: 'system', color: '#000' }
-    ]);
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [savedMessages, setSavedMessages] = useState<Message[]>([]);
+
+    const [channel, setChannel] = useState('ponce');
+    const debouncedChannel = useDebounce(channel, 500);
+
+    const handleChange = (event: React.ChangeEvent<any>) => {
+        setChannel(event.target.value);
+    };
 
     const onDiv = useRef(false);
 
@@ -24,10 +28,13 @@ export const App = () => {
     const client = useRef<tmi.Client | null>(null);
 
     useEffect(() => {
-        console.log('item');
+        setMessages([{ message: `Welcome to ${debouncedChannel}'s chat!`, author: 'system', color: '#000' }]);
+
+        setSavedMessages([{ message: 'Welcome to saved chat!', author: 'system', color: '#000' }]);
+
         client.current = new tmi.Client({
             connection: { reconnect: true },
-            channels: ['ponce']
+            channels: [debouncedChannel]
         });
 
         client.current.connect();
@@ -47,7 +54,7 @@ export const App = () => {
                 }
             ]);
         });
-    }, []);
+    }, [debouncedChannel]);
 
     useEffect(() => {
         if (messageEl) {
@@ -86,6 +93,9 @@ export const App = () => {
 
     return (
         <Container>
+            <Row>
+                <Form.Control type="text" placeholder="channel" defaultValue={channel} onChange={handleChange} />
+            </Row>
             <Row>
                 <Col>
                     <h2>Chat</h2>
