@@ -105,6 +105,14 @@ export const App = () => {
             });
         });
 
+        client.current.on('timeout', (_channel, username) => {
+            clearMessagesFrom(username);
+        });
+
+        client.current.on('ban', (_channel, username) => {
+            clearMessagesFrom(username);
+        });
+
         return () => {
             client.current?.disconnect();
         };
@@ -132,6 +140,12 @@ export const App = () => {
     const pushMessage = (message: Message) => {
         setMessages((prev) => {
             return [...(prev.length > 100 && !onDiv.current ? prev.slice(1, 101) : prev), message];
+        });
+    };
+
+    const clearMessagesFrom = (username: string) => {
+        setMessages((prev) => {
+            return prev.filter((message) => message.author.toLowerCase() !== username.toLowerCase());
         });
     };
 
